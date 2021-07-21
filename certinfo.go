@@ -125,7 +125,7 @@ func printName(names []pkix.AttributeTypeAndValue, buf *bytes.Buffer) []string {
 			case 17:
 				values = append(values, fmt.Sprintf("POSTALCODE=%s", name.Value))
 			default:
-				values = append(values, fmt.Sprintf("UnknownOID=%s", name.Type.String()))
+				values = append(values, fmt.Sprintf("%s=%s", name.Type.String(), name.Value))
 			}
 		} else if oid.Equal(oidEmailAddress) {
 			values = append(values, fmt.Sprintf("emailAddress=%s", name.Value))
@@ -134,7 +134,7 @@ func printName(names []pkix.AttributeTypeAndValue, buf *bytes.Buffer) []string {
 		} else if oid.Equal(oidUserID) {
 			values = append(values, fmt.Sprintf("UID=%s", name.Value))
 		} else {
-			values = append(values, fmt.Sprintf("UnknownOID=%s", name.Type.String()))
+			values = append(values, fmt.Sprintf("%s=%s", name.Type.String(), name.Value))
 		}
 	}
 	if len(values) > 0 {
