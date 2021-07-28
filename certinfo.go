@@ -40,6 +40,7 @@ var (
 	oidStepProvisioner                = asn1.ObjectIdentifier{1, 3, 6, 1, 4, 1, 37476, 9000, 64, 1}
 	oidStepCertificateAuthority       = asn1.ObjectIdentifier{1, 3, 6, 1, 4, 1, 37476, 9000, 64, 2}
 	oidSignedCertificateTimestampList = asn1.ObjectIdentifier{1, 3, 6, 1, 4, 1, 11129, 2, 4, 2}
+	oidPoisonExtension                = asn1.ObjectIdentifier{1, 3, 6, 1, 4, 1, 11129, 2, 4, 3}
 )
 
 // validity allows unmarshaling the certificate validity date range
@@ -727,6 +728,13 @@ func CertificateText(cert *x509.Certificate) (string, error) {
 					// There are no available extensions
 					// buf.WriteString(fmt.Sprintf("%20sExtensions: %v\n", "", sct.Extensions))
 					printSCTSignature(sct.Signature, &buf)
+				}
+			} else if ext.Id.Equal(oidPoisonExtension) {
+				buf.WriteString(fmt.Sprintf("%12sCT Precertificate Poison:", ""))
+				if ext.Critical {
+					buf.WriteString(" critical\n")
+				} else {
+					buf.WriteString("\n")
 				}
 			} else {
 				buf.WriteString(fmt.Sprintf("%12s%s:", "", ext.Id.String()))
