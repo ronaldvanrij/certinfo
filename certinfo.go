@@ -281,32 +281,24 @@ func printSubjAltNames(ext pkix.Extension, dnsNames []string, emailAddresses []s
 		buf.WriteString("\n")
 	}
 	if len(dnsNames) > 0 {
-		buf.WriteString(fmt.Sprintf("%16sDNS:%s", "", dnsNames[0]))
-		for i := 1; i < len(dnsNames); i++ {
-			buf.WriteString(fmt.Sprintf(", DNS:%s", dnsNames[i]))
+		for _, dnsName := range dnsNames {
+			buf.WriteString(fmt.Sprintf("%16sDNS:%s\n", "", dnsName))
 		}
-		buf.WriteString("\n")
 	}
 	if len(emailAddresses) > 0 {
-		buf.WriteString(fmt.Sprintf("%16semail:%s", "", emailAddresses[0]))
-		for i := 1; i < len(emailAddresses); i++ {
-			buf.WriteString(fmt.Sprintf(", email:%s", emailAddresses[i]))
+		for _, emailAddress := range emailAddresses {
+			buf.WriteString(fmt.Sprintf("%16semail:%s\n", "", emailAddress))
 		}
-		buf.WriteString("\n")
 	}
 	if len(ipAddresses) > 0 {
-		buf.WriteString(fmt.Sprintf("%16sIP Address:%s", "", ipAddresses[0].String())) // XXX verify string format
-		for i := 1; i < len(ipAddresses); i++ {
-			buf.WriteString(fmt.Sprintf(", IP Address:%s", ipAddresses[i].String()))
+		for _, ipAddress := range ipAddresses {
+			buf.WriteString(fmt.Sprintf("%16sIP Address:%s\n", "", ipAddress.String())) // XXX verify string format
 		}
-		buf.WriteString("\n")
 	}
 	if len(uris) > 0 {
-		buf.WriteString(fmt.Sprintf("%16sURI:%s", "", uris[0].String()))
-		for i := 1; i < len(uris); i++ {
-			buf.WriteString(fmt.Sprintf(", URI:%s", uris[i].String()))
+		for _, uri := range uris {
+			buf.WriteString(fmt.Sprintf("%16sURI:%s\n", "", uri.String()))
 		}
-		buf.WriteString("\n")
 	}
 	return nil
 }
